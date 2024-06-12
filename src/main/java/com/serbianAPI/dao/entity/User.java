@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -21,11 +22,20 @@ public class User implements UserDetails {
     @Id
     @UuidGenerator
     private String id;
+
     private String name;
-    //private String lastname;
+
     @Column(unique = true)
     private String email;
+
     private String password;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<Product> products;
+
+    public void addProduct(Product product){
+        this.products.add(product);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

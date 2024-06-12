@@ -1,13 +1,13 @@
 package com.serbianAPI.dao.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.UuidGenerator;
 
 @Data
 @Builder
@@ -15,10 +15,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 public class Product {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String userId;
+    @UuidGenerator
+    private String id;
+
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name="user_id", nullable=false)
+    private User user;
+
     private String name;
-    private String type;
+
+    private ProductType type;
+
+    private PriceType priceType;
+
+    private double price;
 }

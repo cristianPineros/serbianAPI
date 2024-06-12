@@ -1,5 +1,7 @@
 server:
   port: 8081
+  servlet:
+    contextPath: /api/v1
 
 application:
   security:
@@ -12,7 +14,7 @@ application:
 spring:
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: false
     properties:
       hibernate:
